@@ -10,7 +10,7 @@ builder.Services.AddSwaggerGen(option =>
         Title = "Пробная версия"
     });
 
-    String PathFile = Path.Combine(System.AppContext.BaseDirectory, "WebAppliction2.xml");
+    String PathFile = Path.Combine(System.AppContext.BaseDirectory, "Practic_45.xml");
     option.IncludeXmlComments(PathFile);
 });
 
@@ -26,6 +26,4 @@ app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Пробная версия");
 });
-app.MapGet("/", () => "Hello World!");
-
 app.Run();

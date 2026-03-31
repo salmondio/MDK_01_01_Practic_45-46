@@ -29,7 +29,7 @@ namespace Practic_45
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Запросы GET")
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Запросы GET");
             });
         }
     }

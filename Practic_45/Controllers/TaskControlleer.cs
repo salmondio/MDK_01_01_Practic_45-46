@@ -17,13 +17,13 @@ namespace Practic_45.Controllers
         /// 
         [Route("List")]
         [HttpGet]
-        [ProducesResponseType(typeof(List<Task>), 200)]
+        [ProducesResponseType(typeof(List<Models.Task>), 200)]
         [ProducesResponseType(500)]
         public ActionResult List()
         {
             try
             {
-                IEnumerable<Task> tasks = new TaskContext().Tasks;
+                IEnumerable<Models.Task> tasks = new TaskContext().Tasks;
                 return Json(tasks);
             }
             catch (Exception ex)
@@ -43,13 +43,13 @@ namespace Practic_45.Controllers
         ///
         [Route("Item")]
         [HttpGet]
-        [ProducesResponseType(typeof(Task), 200)]
+        [ProducesResponseType(typeof(Models.Task), 200)]
         [ProducesResponseType(500)]
         public ActionResult Item(int Id)
         {
             try
             {
-                Task task = new TaskContext().Tasks.Where(x => x.Id == Id).First();
+                Models.Task task = new TaskContext().Tasks.Where(x => x.Id == Id).First();
                 return Json(task);
             }
             catch (Exception ex)
