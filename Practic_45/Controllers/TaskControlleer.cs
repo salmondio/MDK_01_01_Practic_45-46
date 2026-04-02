@@ -4,6 +4,7 @@ using Practic_45.Contexts;
 namespace Practic_45.Controllers
 {
     [Route("api/TaskControlleer")]
+    [ApiExplorerSettings(GroupName = "v1")] // Версия документа
     public class TaskControlleer : Controller
     {
         ///<summary>

@@ -13,6 +13,12 @@
                     Title = "Руководство по использованию моих запросов",
                     Description = "Полное руководство по запросам сереженьки"
                 });
+                c.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Version = "v2",
+                    Title = "Руководство по использованию моих запросов",
+                    Description = "Полное руководство по запросам сереженьки"
+                });
 
                 var filePath = Path.Combine(System.AppContext.BaseDirectory, "ASP_GET.xml");
                 c.IncludeXmlComments(filePath);
