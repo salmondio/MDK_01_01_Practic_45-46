@@ -1,6 +1,4 @@
-﻿
-
-namespace Practic_45
+﻿namespace Practic_45
 {
     public class Startup
     {
@@ -30,6 +28,7 @@ namespace Practic_45
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Запросы GET");
+                c.SwaggerEndpoint("/swagger/v2/swagger.json", "Запросы POST");
             });
         }
     }

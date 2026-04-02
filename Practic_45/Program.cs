@@ -9,6 +9,11 @@ builder.Services.AddSwaggerGen(option =>
         Version = "v1",
         Title = "Пробная версия"
     });
+    option.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Version = "v2",
+        Title = "Пробная версия"
+    });
 
     String PathFile = Path.Combine(System.AppContext.BaseDirectory, "Practic_45.xml");
     option.IncludeXmlComments(PathFile);
