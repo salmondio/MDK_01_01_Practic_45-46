@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
 using Practic_45.Models;
 
 namespace Practic_45.Controllers
 {
     [Route("api/UserController")]
-    [ApiExplorerSettings(GroupName = "v2")]
     public class UserController : Controller
     {
         ///<summary>
@@ -17,6 +17,8 @@ namespace Practic_45.Controllers
         /// /// <response code="403">Ошибка запроса. Данные не указаны.</response>
         /// /// <response code="500">При выполнении запроса возникла ошибка</response>
         [Route("SignIn")]
+        [HttpPost]
+        [ApiExplorerSettings(GroupName = "v2")]
         [ProducesResponseType(typeof(User), 200)]
         [ProducesResponseType(403)]
         [ProducesResponseType(500)]
