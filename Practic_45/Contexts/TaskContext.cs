@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+
 namespace Practic_45.Contexts
 {
     /// <summary> 
@@ -21,7 +22,8 @@ namespace Practic_45.Contexts
         /// </summary>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql("server=10.0.201.112;uid=ISP_23_2_8;pwd=egW19je7D1_;database=base1_ISP_23_2_8;", new MySqlServerVersion(new Version(8, 0, 11)));
+            optionsBuilder.UseSqlServer("Server=10.0.201.112;Trusted_Connection=False;TrustServerCertificate=True;Database=base1_ISP_23_2_8;User=ISP_23_2_8;Pwd=egW19je7D1_;");
+            //MsSQL & MySQL
         }
     }
 }

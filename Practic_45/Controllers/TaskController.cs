@@ -19,7 +19,7 @@ namespace Practic_45.Controllers
         /// 
         //[Route("List")]
         [HttpGet("List")]
-        [ApiExplorerSettings(GroupName = "get")]
+        //[ApiExplorerSettings(GroupName = "v1")]
         [ProducesResponseType(typeof(List<Models.Task>), 200)]
         [ProducesResponseType(500)]
         public ActionResult List()
@@ -46,14 +46,14 @@ namespace Practic_45.Controllers
         ///
         //[Route("Item")]
         [HttpGet("Item/{id}")]
-        [ApiExplorerSettings(GroupName = "get")]
+        //[ApiExplorerSettings(GroupName = "v1")]
         [ProducesResponseType(typeof(Models.Task), 200)]
         [ProducesResponseType(500)]
-        public ActionResult Item(int Id)
+        public ActionResult Item(int id)
         {
             try
             {
-                Models.Task task = new TaskContext().Tasks.Where(x => x.Id == Id).First();
+                Models.Task task = new TaskContext().Tasks.Where(x => x.Id == id).First();
                 return Ok(task);
             }
             catch (Exception ex)
@@ -70,10 +70,10 @@ namespace Practic_45.Controllers
         /// <remarks>Данный метод добавляет задачу в базу данных</remarks>
         //[Route("Add")]
         [HttpPut("Add")]
-        [ApiExplorerSettings(GroupName = "post")]
+        //[ApiExplorerSettings(GroupName = "v3")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public ActionResult Add([FromForm] Models.Task task)
+        public ActionResult Add([FromBody] Models.Task task)
         {
             try
             {

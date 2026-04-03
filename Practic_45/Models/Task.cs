@@ -1,5 +1,8 @@
-﻿namespace Practic_45.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Practic_45.Models
 {
+    [Table("Task")]
     /// <summary>
     /// Задачи
     /// </summary>
