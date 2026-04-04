@@ -24,7 +24,6 @@ namespace Practic_45.Controllers
         [ProducesResponseType(typeof(User), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-
         public ActionResult SignIn([FromForm] string login, [FromForm] string password)
         {
             if(login == null && password == null)
