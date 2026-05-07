@@ -120,5 +120,60 @@ namespace Practic_45.Controllers
                 return StatusCode(500);
             }
         }
+
+        /// <summary>
+        /// Метод удаления задачи
+        /// </summary>
+        /// <param name="task">Данные о задаче</param>
+        /// <retrns>Статус выполнения запроса</retrns>
+        /// <remarks>Данный метод удаляет задачу из базы данных</remarks>
+        //[Route("Add")]
+        [HttpDelete("Delete")]
+        //[ApiExplorerSettings(GroupName = "v3")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public ActionResult Delete([FromBody] int id)
+        {
+            try
+            {
+                TaskContext taskContext = new TaskContext();
+                Models.Task deleteableTask = taskContext.Tasks.Where(x => x.Id == id).First();
+                taskContext.Tasks.Remove(deleteableTask);
+                taskContext.SaveChanges();
+
+                return StatusCode(200);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        /// <summary>
+        /// Метод удаления всех задач
+        /// </summary>
+        /// <retrns>Статус выполнения запроса</retrns>
+        /// <remarks>Данный метод удаляет все задачи из базы данных</remarks>
+        //[Route("Add")]
+        [HttpDelete("DeleteAll")]
+        //[ApiExplorerSettings(GroupName = "v3")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public ActionResult DeleteAll()
+        {
+            try
+            {
+                TaskContext taskContext = new TaskContext();
+                List<Models.Task> tasks = taskContext.Tasks.ToList();
+                taskContext.Tasks.RemoveRange(tasks);
+                taskContext.SaveChanges();
+
+                return StatusCode(200);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
+        }
     }
 }
