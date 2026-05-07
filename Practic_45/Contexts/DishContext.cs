@@ -3,13 +3,13 @@ using Practic_45.Models;
 
 namespace Practic_45.Contexts
 {
-    public class UserContext : DbContext
+    public class DishContext : DbContext
     {
-        public DbSet<User> Users { get; set; } 
-        public UserContext()
+        public DbSet<Dish> Dishes { get; set; }
+        public DishContext()
         {
             Database.EnsureCreated();
-            Users.Load();
+            Dishes.Load();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -3,13 +3,13 @@ using Practic_45.Models;
 
 namespace Practic_45.Contexts
 {
-    public class UserContext : DbContext
+    public class MenuVersionContext : DbContext
     {
-        public DbSet<User> Users { get; set; } 
-        public UserContext()
+        public DbSet<MenuVersion> MenuVersions { get; set; }
+        public MenuVersionContext()
         {
             Database.EnsureCreated();
-            Users.Load();
+            MenuVersions.Load();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
