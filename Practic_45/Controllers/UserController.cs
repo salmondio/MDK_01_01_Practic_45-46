@@ -75,6 +75,7 @@ namespace Practic_45.Controllers
                     return Ok(newUser);
                 }
             }
+            catch {  return StatusCode(500); }
         }
     }
 }

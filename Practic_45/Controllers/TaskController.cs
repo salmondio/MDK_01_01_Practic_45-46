@@ -88,5 +88,37 @@ namespace Practic_45.Controllers
                 return StatusCode(500);
             }
         }
+
+        /// <summary>
+        /// Метод изменения задачи
+        /// </summary>
+        /// <param name="task">Данные о задаче</param>
+        /// <retrns>Статус выполнения запроса</retrns>
+        /// <remarks>Данный метод изменяет задачу в базе данных</remarks>
+        //[Route("Add")]
+        [HttpPut("Change")]
+        //[ApiExplorerSettings(GroupName = "v3")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public ActionResult Change([FromBody] Models.Task task)
+        {
+            try
+            {
+                TaskContext taskContext = new TaskContext();
+                Models.Task changeableTask = taskContext.Tasks.Where(x => x.Id == task.Id).First();
+                changeableTask.Name = task.Name;
+                changeableTask.Priority = task.Priority;
+                changeableTask.DateExecute = task.DateExecute;
+                changeableTask.Comment = task.Comment;
+                changeableTask.Done = task.Done;
+                taskContext.SaveChanges();
+
+                return StatusCode(200);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
+        }
     }
 }
