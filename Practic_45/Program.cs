@@ -1,3 +1,5 @@
+using Microsoft.OpenApi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 //builder.Services.AddRazorPages();
@@ -22,6 +24,28 @@ builder.Services.AddSwaggerGen(option =>
         Version = "v3",
         Title = "PUT Запросы",
         Description = "Все PUT запросы API"
+    });
+    option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "Введите ваш токен. Пример: 12345abcdef", // Подсказка для пользователя
+        Name = "Authorization", // Имя заголовка
+        In = ParameterLocation.Header, // Местоположение - заголовок
+        Type = SecuritySchemeType.ApiKey, // Тип - API ключ
+        Scheme = "Bearer" // Схема
+    });
+    option.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {} // Список скоупов (пустой, т.к. они нам не нужны)
+        }
     });
 
     //string PathFile = Path.Combine(System.AppContext.BaseDirectory, "Practic_45.xml");

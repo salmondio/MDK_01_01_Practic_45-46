@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Practic_45.Contexts;
+using Practic_45.Helpers;
+using Practic_45.Models;
 
 namespace Practic_45.Controllers
 {
@@ -15,23 +17,35 @@ namespace Practic_45.Controllers
         /// <remarks>Данный метод добавляет заказ в базу данных</remarks>
         //[Route("Add")]
         [HttpPost("Add")]
+        [AuthorizeToken]
         //[ApiExplorerSettings(GroupName = "v3")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
         [ProducesResponseType(500)]
-        public ActionResult Add([FromBody] Models.Order order)
+        public ActionResult Add( int id_user,  string address,  DateOnly date, [FromQuery] DishOrder[] dishes)
         {
-            try
+            //try
+            //{
+            OrderContext orderContext = new OrderContext();
+            foreach (var dish in dishes)
             {
-                OrderContext orderContext = new OrderContext();
-                orderContext.Orders.Add(order);
-                orderContext.SaveChanges();
+                orderContext.Orders.Add(new Order
+                {
+                    Id_user = id_user,
+                    Address = address,
+                    Date = date,
+                    Id_dish = dish.DishId,
+                    Count = dish.Count
+                });
+            }
+            orderContext.SaveChanges();
 
-                return StatusCode(200);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500);
-            }
+            return Ok(new {message = "Заказ добавлен"});
+            //}
+            //catch (Exception ex)
+            //{
+            //    return StatusCode(500, new {error = ex.Message});
+            //}
         }
 
         ///<summary>
@@ -60,5 +74,25 @@ namespace Practic_45.Controllers
                 return StatusCode(500);
             }
         }
+
+        [HttpPost("Add2")]
+        public ActionResult Add2([FromBody] RequestOrder data)
+        {
+            return Ok(new { message = "Заказ добавлен" });
+            
+        }
+
+        public class RequestOrder {
+            public string address { get; set; }
+            public DateTime date { get; set; }
+
+            public List<RequestDish> dishes { get; set; }
+
+            public class RequestDish {
+                public string dishId { get; set; }
+                public int count { get; set; }
+            }
+        }
+
     }
 }

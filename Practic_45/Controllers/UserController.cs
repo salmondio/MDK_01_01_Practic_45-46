@@ -59,7 +59,7 @@ namespace Practic_45.Controllers
         //[Route("SignIn")]
         [HttpPost("SignIn")]
         //[ApiExplorerSettings(GroupName = "v2")]
-        [ProducesResponseType(typeof(User), 200)]
+        [ProducesResponseType(typeof(object), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         public ActionResult SignIn([FromBody] Models.User user)
@@ -70,13 +70,22 @@ namespace Practic_45.Controllers
             }
             try
             {
-                User User = new Contexts.UserContext().Users.Where(x => x.Login == user.Login && x.Password == user.Password).First();
+                User? foundUser = new Contexts.UserContext().Users.Where(x => x.Login == user.Login && x.Password == user.Password).First();
 
-                return Ok(User);
+                if (foundUser == null)
+                    return Unauthorized(new { message = "Неверный логин или пароль" });
+
+                string token = Helpers.HashHelper.CreateToken(foundUser.Id);
+                return Ok(new
+                {
+                    user = foundUser,
+                    token = token,
+                    message = "Авторизация успешна"
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, new {error = ex.Message});
             }
         }
 
