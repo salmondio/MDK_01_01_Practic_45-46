@@ -30,8 +30,7 @@ namespace Practic_45.Helpers
             if (user == null || string.IsNullOrEmpty(token))
                 return false;
 
-            string expectedToken = CreateToken(user.Id);
-            return expectedToken == token;
+            return user.Hash == token;
         }
     }
 }

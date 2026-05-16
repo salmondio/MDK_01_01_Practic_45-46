@@ -22,20 +22,20 @@ namespace Practic_45.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(500)]
-        public ActionResult Add( int id_user,  string address,  DateOnly date, [FromQuery] DishOrder[] dishes)
+        public ActionResult Add([FromBody] RequestOrder data)
         {
             //try
             //{
             OrderContext orderContext = new OrderContext();
-            foreach (var dish in dishes)
+            foreach (var dish in data.dishes)
             {
                 orderContext.Orders.Add(new Order
                 {
-                    Id_user = id_user,
-                    Address = address,
-                    Date = date,
-                    Id_dish = dish.DishId,
-                    Count = dish.Count
+                    //Id_user = id_user,
+                    Address = data.address,
+                    Date = data.date,
+                    Id_dish = dish.dishId,
+                    Count = dish.count
                 });
             }
             orderContext.SaveChanges();
@@ -46,6 +46,20 @@ namespace Practic_45.Controllers
             //{
             //    return StatusCode(500, new {error = ex.Message});
             //}
+        }
+
+        public class RequestOrder
+        {
+            public string address { get; set; }
+            public DateOnly date { get; set; }
+
+            public List<RequestDish> dishes { get; set; }
+
+            public class RequestDish
+            {
+                public int dishId { get; set; }
+                public int count { get; set; }
+            }
         }
 
         ///<summary>
@@ -82,17 +96,7 @@ namespace Practic_45.Controllers
             
         }
 
-        public class RequestOrder {
-            public string address { get; set; }
-            public DateTime date { get; set; }
-
-            public List<RequestDish> dishes { get; set; }
-
-            public class RequestDish {
-                public string dishId { get; set; }
-                public int count { get; set; }
-            }
-        }
+        
 
     }
 }

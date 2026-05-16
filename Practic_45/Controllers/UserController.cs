@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Practic_45.Contexts;
 using Practic_45.Models;
 
@@ -70,16 +71,21 @@ namespace Practic_45.Controllers
             }
             try
             {
-                User? foundUser = new Contexts.UserContext().Users.Where(x => x.Login == user.Login && x.Password == user.Password).First();
+                UserContext userContext = new UserContext();
+                User? foundUser = userContext.Users.Where(x => x.Login == user.Login && x.Password == user.Password).First();
 
                 if (foundUser == null)
                     return Unauthorized(new { message = "Неверный логин или пароль" });
 
-                string token = Helpers.HashHelper.CreateToken(foundUser.Id);
+                if (foundUser.Hash.IsNullOrEmpty())
+                {
+                    foundUser.Hash = Helpers.HashHelper.CreateToken(foundUser.Id);
+                    userContext.SaveChanges();
+                }
+
                 return Ok(new
                 {
                     user = foundUser,
-                    token = token,
                     message = "Авторизация успешна"
                 });
             }

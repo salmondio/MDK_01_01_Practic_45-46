@@ -31,33 +31,11 @@ namespace Practic_45.Helpers
             // Самый простой способ: клиент передает userId в теле запроса
             // Или можно из токена расшифровать, но мы выбрали хэш, поэтому просим userId
 
-            // Получаем аргументы метода (например, order)
-            var arguments = context.ActionArguments;
-            object? userIdObject = null;
-
-            // Ищем userId в любом из параметров
-            foreach (var arg in arguments.Values)
-            {
-                var prop = arg?.GetType().GetProperty("Id_user");
-                if (prop != null)
-                {
-                    userIdObject = prop.GetValue(arg);
-                    break;
-                }
-            }
-
-            if (userIdObject == null)
-            {
-                context.Result = new BadRequestObjectResult(new { error = "В запросе не указан Id_user" });
-                return;
-            }
-
-            int userId = Convert.ToInt32(userIdObject);
 
             // 3. Находим пользователя в базе
             using (var userContext = new UserContext())
             {
-                var user = userContext.Users.Find(userId);
+                var user = userContext.Users.Find(token);
                 if (user == null)
                 {
                     context.Result = new UnauthorizedObjectResult(new { error = "Пользователь не найден" });
